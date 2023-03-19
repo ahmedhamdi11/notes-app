@@ -14,11 +14,8 @@ class CustomAppBar extends StatelessWidget {
           title,
           style: const TextStyle(fontSize: 28),
         ),
-        GestureDetector(
-          onTap: () {},
-          child: CustomIcon(
-            icon: icon,
-          ),
+        CustomIcon(
+          icon: icon,
         ),
       ],
     );
