@@ -1,78 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:my_notes/components/custom_button.dart';
-import 'package:my_notes/components/custom_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_notes/components/add_note_form.dart';
+import 'package:my_notes/cubit/add_note_cubit.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
   const AddNoteBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: AddNoteForm(),
-      ),
-    );
-  }
-}
-
-class AddNoteForm extends StatefulWidget {
-  const AddNoteForm({Key? key}) : super(key: key);
-
-  @override
-  State<AddNoteForm> createState() => _AddNoteFormState();
-}
-
-class _AddNoteFormState extends State<AddNoteForm> {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
-  String? title, supTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: autoValidateMode,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 32.0,
-          ),
-          CustomTextField(
-            hintText: 'Title',
-            onSaved: (value) {
-              title = value;
-            },
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          CustomTextField(
-            hintText: 'Content',
-            maxLines: 5,
-            onSaved: (value) {
-              supTitle = value;
-            },
-          ),
-          const SizedBox(
-            height: 32.0,
-          ),
-          CustomButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-              } else {
-                setState(() {
-                  autoValidateMode = AutovalidateMode.always;
-                });
+    return BlocProvider(
+        create: (context) => AddNoteCubit(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+              child: BlocConsumer<AddNoteCubit, AddNoteState>(
+            listener: (context, state) {
+              if (state is AddNoteSuccess) {
+                Navigator.pop(context);
+              } else if (state is AddNoteFailure) {
+                debugPrint(state.error);
               }
             },
-          ),
-          const SizedBox(
-            height: 32.0,
-          )
-        ],
-      ),
-    );
+            builder: (context, state) {
+              return const AddNoteForm();
+            },
+          )),
+        ));
   }
 }
