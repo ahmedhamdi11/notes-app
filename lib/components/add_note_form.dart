@@ -30,6 +30,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 height: 28.0,
               ),
               CustomTextField(
+                autoFocus: true,
                 hintText: 'Title',
                 onSaved: (value) {
                   title = value;
