@@ -19,55 +19,60 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: autoValidateMode,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 32.0,
+    return BlocBuilder<AddNoteCubit, AddNoteState>(
+      builder: (context, state) {
+        return Form(
+          key: formKey,
+          autovalidateMode: autoValidateMode,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 32.0,
+              ),
+              CustomTextField(
+                hintText: 'Title',
+                onSaved: (value) {
+                  title = value;
+                },
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              CustomTextField(
+                hintText: 'Content',
+                maxLines: 5,
+                onSaved: (value) {
+                  supTitle = value;
+                },
+              ),
+              const SizedBox(
+                height: 32.0,
+              ),
+              CustomButton(
+                isLoading: state is AddNoteLoading ? true : false,
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    var noteModel = NoteModel(
+                        title: title!,
+                        content: supTitle!,
+                        date: DateTime.now().toString(),
+                        color: Colors.yellow.value);
+                    BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
+                  } else {
+                    setState(() {
+                      autoValidateMode = AutovalidateMode.always;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 32.0,
+              )
+            ],
           ),
-          CustomTextField(
-            hintText: 'Title',
-            onSaved: (value) {
-              title = value;
-            },
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          CustomTextField(
-            hintText: 'Content',
-            maxLines: 5,
-            onSaved: (value) {
-              supTitle = value;
-            },
-          ),
-          const SizedBox(
-            height: 32.0,
-          ),
-          CustomButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-                var noteModel = NoteModel(
-                    title: title!,
-                    content: supTitle!,
-                    date: DateTime.now().toString(),
-                    color: Colors.yellow.value);
-                BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
-              } else {
-                setState(() {
-                  autoValidateMode = AutovalidateMode.always;
-                });
-              }
-            },
-          ),
-          const SizedBox(
-            height: 32.0,
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }
