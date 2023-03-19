@@ -27,7 +27,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
           child: Column(
             children: [
               const SizedBox(
-                height: 32.0,
+                height: 28.0,
               ),
               CustomTextField(
                 hintText: 'Title',
@@ -46,7 +46,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 },
               ),
               const SizedBox(
-                height: 32.0,
+                height: 28.0,
               ),
               CustomButton(
                 isLoading: state is AddNoteLoading ? true : false,
@@ -67,7 +67,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 },
               ),
               const SizedBox(
-                height: 32.0,
+                height: 28.0,
               )
             ],
           ),
