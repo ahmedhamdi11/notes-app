@@ -14,14 +14,14 @@ class NoteItem extends StatelessWidget {
         ListTile(
           title: const Text(
             'Note Title',
-            style: TextStyle(color: Colors.black, fontSize: 28),
+            style: TextStyle(color: Colors.black, fontSize: 26),
           ),
           subtitle: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               'Note content content content content content.',
               style:
-                  TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.4)),
+                  TextStyle(fontSize: 18, color: Colors.black.withOpacity(0.4)),
             ),
           ),
           trailing: IconButton(
@@ -37,8 +37,7 @@ class NoteItem extends StatelessWidget {
           padding: const EdgeInsets.only(right: 16),
           child: Text(
             'dateTime',
-            style:
-                TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.4)),
+            style: TextStyle(color: Colors.black.withOpacity(0.4)),
           ),
         ),
       ]),
