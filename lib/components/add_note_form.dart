@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:my_notes/components/custom_button.dart';
 import 'package:my_notes/components/custom_text_field.dart';
-import 'package:my_notes/cubit/add_note_cubit.dart';
+import 'package:my_notes/cubit/add_note_cubit/add_note_cubit.dart';
 import 'package:my_notes/models/note_model.dart';
 
 class AddNoteForm extends StatefulWidget {
@@ -57,7 +58,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     var noteModel = NoteModel(
                         title: title!,
                         content: supTitle!,
-                        date: DateTime.now().toString(),
+                        date: DateFormat.yMMMd().format(DateTime.now()),
                         color: Colors.yellow.value);
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
                   } else {
