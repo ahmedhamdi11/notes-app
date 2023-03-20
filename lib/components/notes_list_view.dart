@@ -14,11 +14,8 @@ class NotesListView extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemCount: BlocProvider.of<GetNotesCubit>(context).notes!.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: NoteItem(
-                  note: BlocProvider.of<GetNotesCubit>(context).notes![index],
-                ),
+              return NoteItem(
+                note: BlocProvider.of<GetNotesCubit>(context).notes![index],
               );
             });
       },

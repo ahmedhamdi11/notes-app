@@ -20,44 +20,48 @@ class NoteItem extends StatelessWidget {
                       note: note,
                     )));
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        decoration: BoxDecoration(
-            color: Color(note.color), borderRadius: BorderRadius.circular(16)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          ListTile(
-            title: Text(
-              note.title,
-              style: const TextStyle(color: Colors.black, fontSize: 26),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          decoration: BoxDecoration(
+              color: Color(note.color),
+              borderRadius: BorderRadius.circular(16)),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            ListTile(
+              title: Text(
+                note.title,
+                style: const TextStyle(color: Colors.black, fontSize: 26),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  note.content,
+                  style: TextStyle(
+                      fontSize: 18, color: Colors.black.withOpacity(0.4)),
+                ),
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  note.delete();
+                  BlocProvider.of<GetNotesCubit>(context).getNotes();
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.black,
+                  size: 28,
+                ),
+              ),
             ),
-            subtitle: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
               child: Text(
-                note.content,
-                style: TextStyle(
-                    fontSize: 18, color: Colors.black.withOpacity(0.4)),
+                note.date,
+                style: TextStyle(color: Colors.black.withOpacity(0.4)),
               ),
             ),
-            trailing: IconButton(
-              onPressed: () {
-                note.delete();
-                BlocProvider.of<GetNotesCubit>(context).getNotes();
-              },
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.black,
-                size: 28,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Text(
-              note.date,
-              style: TextStyle(color: Colors.black.withOpacity(0.4)),
-            ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

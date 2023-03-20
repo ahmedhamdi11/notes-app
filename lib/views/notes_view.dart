@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_notes/components/add_note_bottom_sheet.dart';
 import 'package:my_notes/components/custom_appbar.dart';
 import 'package:my_notes/components/notes_list_view.dart';
+import 'package:my_notes/views/search_delegate_view.dart';
 
 class NotesView extends StatelessWidget {
   const NotesView({super.key});
@@ -22,18 +23,24 @@ class NotesView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(children: const [
-          SizedBox(
+        child: Column(children:  [
+          const SizedBox(
             height: 50,
           ),
           CustomAppBar(
             title: 'Notes',
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
+            onIconTap: (){
+              showSearch(
+                  context: context,
+                  delegate: SearchDelegateView(),
+              );
+            },
           ),
-          SizedBox(
+          const SizedBox(
             height: 5.0,
           ),
-          Expanded(child: NotesListView()),
+          const Expanded(child: NotesListView()),
         ]),
       ),
     );
