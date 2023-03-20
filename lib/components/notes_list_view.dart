@@ -10,14 +10,30 @@ class NotesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetNotesCubit, GetNotesState>(
       builder: (context, state) {
-        return ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: BlocProvider.of<GetNotesCubit>(context).notes!.length,
-            itemBuilder: (context, index) {
-              return NoteItem(
-                note: BlocProvider.of<GetNotesCubit>(context).notes![index],
-              );
-            });
+        if (BlocProvider.of<GetNotesCubit>(context).notes!.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.notes,
+                  size: 60,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+                const Text('There is no Notes yet'),
+              ],
+            ),
+          );
+        } else {
+          return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: BlocProvider.of<GetNotesCubit>(context).notes!.length,
+              itemBuilder: (context, index) {
+                return NoteItem(
+                  note: BlocProvider.of<GetNotesCubit>(context).notes![index],
+                );
+              });
+        }
       },
     );
   }
