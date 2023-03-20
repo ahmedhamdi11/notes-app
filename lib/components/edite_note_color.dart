@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_notes/components/color_picker_item.dart';
 import 'package:my_notes/constants.dart';
-import 'package:my_notes/cubit/add_note_cubit/add_note_cubit.dart';
+import 'package:my_notes/models/note_model.dart';
 
-class NoteColorPicker extends StatefulWidget {
-  const NoteColorPicker({Key? key}) : super(key: key);
+class EditeNoteColor extends StatefulWidget {
+  const EditeNoteColor({Key? key, required this.note}) : super(key: key);
+  final NoteModel note;
 
   @override
-  State<NoteColorPicker> createState() => _NoteColorPickerState();
+  State<EditeNoteColor> createState() => _EditeNoteColorState();
 }
 
-class _NoteColorPickerState extends State<NoteColorPicker> {
-  int currentIndex = 0;
+class _EditeNoteColorState extends State<EditeNoteColor> {
+  late int currentIndex;
+
+  @override
+  void initState() {
+    currentIndex = kNoteColors.indexOf(Color(widget.note.color));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +33,7 @@ class _NoteColorPickerState extends State<NoteColorPicker> {
               onTap: () {
                 setState(() {
                   currentIndex = index;
-                  BlocProvider.of<AddNoteCubit>(context).color =
-                      kNoteColors[index];
+                  widget.note.color = kNoteColors[index].value;
                 });
               },
               child: ColorPickerItem(
